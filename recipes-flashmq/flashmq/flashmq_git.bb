@@ -14,6 +14,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=bec396627de11f42fe63f6d500f58d7a \
                     file://examples/plugin_libcurl/LICENSE;md5=36a155ec7e0de8fc9348adb633fb64e2"
 
 SRC_URI = "git://github.com/halfgaar/FlashMQ.git;protocol=https;branch=master"
+SRC_URI += "file://flashmq.conf"
 
 # Modify these as desired
 PV = "1.27.3"
@@ -39,6 +40,9 @@ do_install:append() {
     rm -rf ${D}${localstatedir}/log ${D}${localstatedir}/volatile
     install -d ${D}${nonarch_libdir}/tmpfiles.d
     echo "d /var/log/flashmq 0755 root root -" > ${D}${nonarch_libdir}/tmpfiles.d/flashmq.conf
+
+    install -d ${D}${sysconfdir}/flashmq
+       install -m 0644 ${WORKDIR}/flashmq.conf ${D}${sysconfdir}/flashmq/flashmq.conf
 }
 
 FILES:${PN} += "${nonarch_libdir}/tmpfiles.d"

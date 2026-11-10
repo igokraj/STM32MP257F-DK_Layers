@@ -100,6 +100,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=3dcc569976645c81d60ad4239718c0ea \
                     file://nng/extern/msquic/submodules/xdp-for-windows/submodules/wil/LICENSE;md5=b98fddd052bb2f5ddbcdbd417ffb26a8"
 
 SRC_URI = "gitsm://github.com/nanomq/nanomq.git;protocol=https;branch=master;lfs=0"
+SRC_URI  += "file://nanomq.conf"
 
 # Modify these as desired
 PV = "1.0+git"
@@ -119,3 +120,7 @@ inherit cmake pkgconfig perlnative python3native
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = ""
 
+do_install:append() {
+       install -d ${D}${sysconfdir}
+       install -m 0644 ${WORKDIR}/nanomq.conf ${D}${sysconfdir}/nanomq.conf
+}
