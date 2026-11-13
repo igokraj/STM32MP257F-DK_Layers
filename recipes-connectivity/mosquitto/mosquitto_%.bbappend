@@ -1,5 +1,5 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI += "file://ca.crt file://server.crt file://server.key file://mosquitto.conf"
+SRC_URI += "file://ca.crt file://server.crt file://server.key file://mosquitto.conf file://passwd"
 
 do_install:append() {
     install -d ${D}${sysconfdir}/mosquitto
@@ -8,4 +8,5 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/ca.crt     ${D}${sysconfdir}/mosquitto/certs/
     install -m 0644 ${WORKDIR}/server.crt ${D}${sysconfdir}/mosquitto/certs/
     install -m 0600 -o mosquitto -g mosquitto ${WORKDIR}/server.key ${D}${sysconfdir}/mosquitto/certs/
+    install -m 0600 -o mosquitto -g mosquitto ${WORKDIR}/passwd ${D}${sysconfdir}/mosquitto/passwd
 }
