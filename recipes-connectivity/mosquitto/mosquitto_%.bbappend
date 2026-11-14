@@ -1,6 +1,8 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += "file://ca.crt file://server.crt file://server.key file://mosquitto.conf file://passwd"
 
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
+
 do_install:append() {
     install -d ${D}${sysconfdir}/mosquitto
     install -m 0644 ${WORKDIR}/mosquitto.conf ${D}${sysconfdir}/mosquitto/mosquitto.conf
