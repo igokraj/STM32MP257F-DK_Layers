@@ -1,3 +1,4 @@
 *.key
 *.crt
 passwd
+nanomq_pwd.conf

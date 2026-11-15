@@ -100,7 +100,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=3dcc569976645c81d60ad4239718c0ea \
                     file://nng/extern/msquic/submodules/xdp-for-windows/submodules/wil/LICENSE;md5=b98fddd052bb2f5ddbcdbd417ffb26a8"
 
 SRC_URI = "gitsm://github.com/nanomq/nanomq.git;protocol=https;branch=master;lfs=0"
-SRC_URI  += "file://nanomq.conf"
+SRC_URI  += "file://nanomq.conf file://ca.crt file://server.crt file://server.key file://nanomq_pwd.conf"
 
 # Modify these as desired
 PV = "1.0+git"
@@ -123,4 +123,9 @@ EXTRA_OECMAKE = ""
 do_install:append() {
        install -d ${D}${sysconfdir}
        install -m 0644 ${WORKDIR}/nanomq.conf ${D}${sysconfdir}/nanomq.conf
+       install -d ${D}${sysconfdir}/nanomq/certs
+       install -m 0644 ${WORKDIR}/ca.crt      ${D}${sysconfdir}/nanomq/certs/
+       install -m 0644 ${WORKDIR}/server.crt  ${D}${sysconfdir}/nanomq/certs/
+       install -m 0600 ${WORKDIR}/server.key  ${D}${sysconfdir}/nanomq/certs/
+       install -m 0600 ${WORKDIR}/nanomq_pwd.conf ${D}${sysconfdir}/nanomq_pwd.conf
 }

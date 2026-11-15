@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=bec396627de11f42fe63f6d500f58d7a \
                     file://examples/plugin_libcurl/LICENSE;md5=36a155ec7e0de8fc9348adb633fb64e2"
 
 SRC_URI = "git://github.com/halfgaar/FlashMQ.git;protocol=https;branch=master"
-SRC_URI += "file://flashmq.conf"
+SRC_URI += "file://ca.crt file://server.crt file://server.key file://flashmq.conf file://passwd"
 
 # Modify these as desired
 PV = "1.27.3"
@@ -43,6 +43,13 @@ do_install:append() {
 
     install -d ${D}${sysconfdir}/flashmq
        install -m 0644 ${WORKDIR}/flashmq.conf ${D}${sysconfdir}/flashmq/flashmq.conf
+
+    install -d ${D}${sysconfdir}/flashmq/certs
+    install -m 0644 ${WORKDIR}/ca.crt     ${D}${sysconfdir}/flashmq/certs/
+    install -m 0644 ${WORKDIR}/server.crt ${D}${sysconfdir}/flashmq/certs/
+    install -m 0600 ${WORKDIR}/server.key ${D}${sysconfdir}/flashmq/certs/
+    install -m 0600 ${WORKDIR}/passwd ${D}${sysconfdir}/flashmq/passwd
+
 }
 
 FILES:${PN} += "${nonarch_libdir}/tmpfiles.d"
